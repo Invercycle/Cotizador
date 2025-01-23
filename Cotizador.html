@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Simulador de crédito</title>
+        <!-- Enlace a Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif; /* Cambiado a Poppins */
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+        .simulador {
+            background-color: #fff;
+            border: 2px solid #7761ff;
+            border-radius: 8px;
+            width: 350px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .simulador h1 {
+            color: #7761ff;
+            margin-bottom: 20px;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .campo input, .campo select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .resultado {
+            margin: 20px 0;
+            font-size: 24px;
+            color: #7761ff;
+            font-weight: bold;
+        }
+
+        .boton {
+            background-color: #7761ff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .boton:hover {
+            background-color: #191923;
+        }
+
+        .nota {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="simulador-container">
+        <!-- Logo de Flixopay -->
+        <img src="https://flixopay.com/images/Logo.png" alt="Logo Flixopay">
+        <style>
+            .simulador-container {
+                width: 100%;
+                max-width: 400px;
+                padding: 20px;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                text-align: center; /* Centrar contenido horizontalmente */
+            }
+        
+            .simulador-container img {
+                display: block; /* Asegura que se comporte como bloque */
+                margin: 0 auto 20px; /* Centrar horizontalmente y agregar espacio inferior */
+                max-width: 150px; /* Limitar el ancho del logo */
+            }
+        </style>
+    <div class="simulador">
+        <h1>Simula tu crédito</h1>
+        <div class="resultado" id="pagoMensual">Pago mensual estimado: $0</div>
+        <div class="campo">
+            <label for="monto">Monto del préstamo</label>
+            <input type="number" id="monto" placeholder="¿Cuanto necesitas?" min="1000000" max="9999999">
+        </div>
+        <div class="campo">
+            <label for="plazo">¿A cuántos meses?</label>
+            <select id="plazo">
+    <!-- Opciones de cuotas generadas dinámicamente -->
+</select>
+        </div>
+        <div class="campo">
+            <label for="totalPagar">Valor total a pagar</label>
+            <input type="text" id="totalPagar" value="$0" readonly>
+        </div>
+        <button class="boton" id="calcular">Simular</button>
+        <p class="nota">
+            Estos valores solo representan una proyección estimada de tu crédito. Para conocer más sobre el valor final, solicita tu crédito. Según el perfil crediticio, este podría incluir un fondo de garantías o aval, el cual tendría un costo variable entre el 10-15% más IVA sobre el valor del crédito.
+        </p>
+    </div>
+    <script>
+        // Función para formatear números como moneda
+        function formatearMoneda(valor) {
+            return new Intl.NumberFormat("es-CO", {
+                style: "currency",
+                currency: "COP",
+                minimumFractionDigits: 0
+            }).format(valor);
+        }
+    
+        // Función para generar las opciones del selector de cuotas
+        function generarOpcionesCuotas() {
+            const plazoInput = document.getElementById("plazo");
+            plazoInput.innerHTML = ""; // Limpiar opciones existentes
+    
+            for (let i = 1; i <= 24; i++) {
+                const opcion = document.createElement("option");
+                opcion.value = i;
+                opcion.textContent = `${i} ${i === 1 ? "mes" : "meses"}`;
+                plazoInput.appendChild(opcion);
+            }
+        }
+    
+        // Función para calcular el crédito
+        function calcularCredito() {
+            // Obtener valores de los campos
+            const montoInput = document.getElementById("monto");
+            const plazoInput = document.getElementById("plazo");
+            const monto = parseFloat(montoInput.value);
+            const plazo = parseInt(plazoInput.value);
+    
+            // Validar que el monto esté dentro del rango permitido
+            if (isNaN(monto) || monto < 10000 || monto > 9999999) {
+                alert("Por favor, ingresa un monto válido entre $10,000 y $9,999,999.");
+                return;
+            }
+    
+            // Validar que el plazo sea un número válido
+            if (isNaN(plazo) || plazo < 1 || plazo > 24) {
+                alert("Por favor, selecciona un plazo válido.");
+                return;
+            }
+    
+            // Definir una tasa de interés fija (por ejemplo, 1.87% mensual)
+            const tasaInteresMensual = 0.0187;
+    
+            // Calcular el pago mensual (fórmula de cuota fija)
+            const pagoMensual = (monto * tasaInteresMensual) / 
+                                (1 - Math.pow(1 + tasaInteresMensual, -plazo));
+    
+            // Calcular el valor total a pagar
+            const totalPagar = pagoMensual * plazo;
+    
+            // Actualizar los campos de resultados
+            document.getElementById("pagoMensual").textContent = 
+                `Pago mensual estimado: ${formatearMoneda(pagoMensual)}`;
+            document.getElementById("totalPagar").value = formatearMoneda(totalPagar);
+        }
+    
+        // Generar opciones de cuotas al cargar la página
+        document.addEventListener("DOMContentLoaded", generarOpcionesCuotas);
+    
+        // Agregar eventos
+        document.getElementById("calcular").addEventListener("click", calcularCredito);
+        document.getElementById("plazo").addEventListener("change", calcularCredito);
+    </script>    
+</body>
+</html>

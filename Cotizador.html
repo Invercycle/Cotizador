@@ -1,195 +1,283 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Simulador de crédito</title>
-        <!-- Enlace a Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-        <style>
-            body {
-                font-family: 'Poppins', sans-serif; /* Cambiado a Poppins */
-                background-color: #f9f9f9;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Garantía Extendida Invercycle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
 
-        .simulador {
-            background-color: #fff;
-            border: 2px solid #7761ff;
-            border-radius: 8px;
-            width: 350px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+    .main-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+      max-width: 900px;
+      width: 100%;
+    }
 
-        .simulador h1 {
-            color: #7761ff;
-            margin-bottom: 20px;
-        }
+    .simulador-container,
+    .informativo {
+      flex: 1 1 350px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
 
-        .campo {
-            margin-bottom: 15px;
-            text-align: left;
-        }
+    .simulador-container img {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 150px;
+    }
 
-        .campo label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+    .simulador h1 {
+      color: #FF4500;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-        .campo input, .campo select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
+    .campo {
+      margin-bottom: 15px;
+      text-align: left;
+    }
 
-        .resultado {
-            margin: 20px 0;
-            font-size: 24px;
-            color: #7761ff;
-            font-weight: bold;
-        }
+    .campo label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
 
-        .boton {
-            background-color: #7761ff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
+    .campo input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
 
-        .boton:hover {
-            background-color: #191923;
-        }
+    .boton {
+      background-color: #FF4500;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 10px;
+    }
 
-        .nota {
-            font-size: 12px;
-            color: #666;
-            margin-top: 10px;
-        }
-    </style>
+    .boton:hover {
+      background-color: #cc3700;
+    }
+
+    .resultado {
+      margin: 20px 0;
+      font-size: 24px;
+      color: #FF4500;
+      font-weight: bold;
+    }
+
+    .nota, .financia {
+      font-size: 13px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    .flixopay-boton,
+    .whatsapp {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 10px;
+      text-decoration: none;
+    }
+
+    .flixopay-boton {
+      background-color: #7761ff;
+      color: #fff;
+    }
+
+    .flixopay-boton:hover {
+      background-color: #5f4fdc;
+    }
+
+    .whatsapp {
+      background-color: #25D366;
+      color: #fff;
+    }
+
+    .whatsapp:hover {
+      background-color: #1ebf56;
+    }
+
+    .candado {
+  font-size: 40px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.5s ease-in-out;
+  text-align: center;
+  margin: 20px auto 0;
+  display: block;
+}
+
+
+    .candado.visible {
+      opacity: 1;
+      transform: scale(1.2);
+      animation: bounce 1s ease;
+    }
+
+    @keyframes bounce {
+      0%   { transform: scale(1.2); }
+      50%  { transform: scale(1); }
+      100% { transform: scale(1.2); }
+    }
+
+    .informativo h2 {
+      color: #FF4500;
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .paso {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      gap: 10px;
+    }
+
+    .paso span.icono {
+      font-size: 24px;
+      color: #FF4500;
+      width: 30px;
+      text-align: center;
+    }
+
+    .paso p {
+      margin: 0;
+      font-size: 15px;
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="main-container">
+    <!-- Simulador -->
     <div class="simulador-container">
-        <!-- Logo de Flixopay -->
-        <img src="https://flixopay.com/images/Logo.png" alt="Logo Flixopay">
-        <style>
-            .simulador-container {
-                width: 100%;
-                max-width: 400px;
-                padding: 20px;
-                background: white;
-                border: 1px solid #ddd;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                text-align: center; /* Centrar contenido horizontalmente */
-            }
-        
-            .simulador-container img {
-                display: block; /* Asegura que se comporte como bloque */
-                margin: 0 auto 20px; /* Centrar horizontalmente y agregar espacio inferior */
-                max-width: 150px; /* Limitar el ancho del logo */
-            }
-        </style>
-    <div class="simulador">
-        <h1>Simula tu crédito</h1>
-        <div class="resultado" id="pagoMensual">Pago mensual estimado: $0</div>
+      <img src="https://panamericana.vtexassets.com/arquivos/ids/487369/garantia-extendida-1-ano-460049.jpg?v=638139110632170000" alt="Logo Invercycle" />
+      <div class="simulador">
+        <h1>Cotizador Invercycle</h1>
         <div class="campo">
-            <label for="monto">Monto del préstamo</label>
-            <input type="number" id="monto" placeholder="¿Cuanto necesitas?" min="1000000" max="9999999">
+          <label for="valorMoto">Valor de la moto (sin documentos)</label>
+          <input type="text" id="valorMoto" placeholder="Ingresa el valor" />
         </div>
-        <div class="campo">
-            <label for="plazo">¿A cuántos meses?</label>
-            <select id="plazo">
-    <!-- Opciones de cuotas generadas dinámicamente -->
-</select>
-        </div>
-        <div class="campo">
-            <label for="totalPagar">Valor total a pagar</label>
-            <input type="text" id="totalPagar" value="$0" readonly>
-        </div>
-        <button class="boton" id="calcular">Simular</button>
+        <button class="boton" id="calcular">Calcular</button>
+        <div class="resultado" id="costoGarantia">Costo de la garantía: $0</div>
+        <div id="iconoCandado" class="candado">🔒</div>
         <p class="nota">
-            Estos valores solo representan una proyección estimada de tu crédito. Para conocer más sobre el valor final, solicita tu crédito. Según el perfil crediticio, este podría incluir un fondo de garantías o aval, el cual tendría un costo variable entre el 10-15% más IVA sobre el valor del crédito.
+          Este valor es una estimación del costo de la garantía extendida de Invercycle (8% sobre el valor de la moto sin documentos).
         </p>
+        <p class="financia">
+          ¿No puedes pagar de contado? ¡Financia tu garantía con <strong>Flixopay</strong> fácilmente!
+        </p>
+        <a class="flixopay-boton" href="https://aliados.flixopay.com" target="_blank">💳 Financia con Flixopay</a>
+        <a class="whatsapp" href="https://api.whatsapp.com/send/?phone=573045889263&text=Quiero%20una%20garant%C3%ADa%20extendida&type=phone_number&app_absent=0" target="_blank">📲 Habla con un asesor por WhatsApp</a>
+      </div>
     </div>
-    <script>
-        // Función para formatear números como moneda
-        function formatearMoneda(valor) {
-            return new Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
-                minimumFractionDigits: 0
-            }).format(valor);
-        }
-    
-        // Función para generar las opciones del selector de cuotas
-        function generarOpcionesCuotas() {
-            const plazoInput = document.getElementById("plazo");
-            plazoInput.innerHTML = ""; // Limpiar opciones existentes
-    
-            for (let i = 1; i <= 24; i++) {
-                const opcion = document.createElement("option");
-                opcion.value = i;
-                opcion.textContent = `${i} ${i === 1 ? "mes" : "meses"}`;
-                plazoInput.appendChild(opcion);
-            }
-        }
-    
-        // Función para calcular el crédito
-        function calcularCredito() {
-            // Obtener valores de los campos
-            const montoInput = document.getElementById("monto");
-            const plazoInput = document.getElementById("plazo");
-            const monto = parseFloat(montoInput.value);
-            const plazo = parseInt(plazoInput.value);
-    
-            // Validar que el monto esté dentro del rango permitido
-            if (isNaN(monto) || monto < 10000 || monto > 9999999) {
-                alert("Por favor, ingresa un monto válido entre $10,000 y $9,999,999.");
-                return;
-            }
-    
-            // Validar que el plazo sea un número válido
-            if (isNaN(plazo) || plazo < 1 || plazo > 24) {
-                alert("Por favor, selecciona un plazo válido.");
-                return;
-            }
-    
-            // Definir una tasa de interés fija (por ejemplo, 1.87% mensual)
-            const tasaInteresMensual = 0.0187;
-    
-            // Calcular el pago mensual (fórmula de cuota fija)
-            const pagoMensual = (monto * tasaInteresMensual) / 
-                                (1 - Math.pow(1 + tasaInteresMensual, -plazo));
-    
-            // Calcular el valor total a pagar
-            const totalPagar = pagoMensual * plazo;
-    
-            // Actualizar los campos de resultados
-            document.getElementById("pagoMensual").textContent = 
-                `Pago mensual estimado: ${formatearMoneda(pagoMensual)}`;
-            document.getElementById("totalPagar").value = formatearMoneda(totalPagar);
-        }
-    
-        // Generar opciones de cuotas al cargar la página
-        document.addEventListener("DOMContentLoaded", generarOpcionesCuotas);
-    
-        // Agregar eventos
-        document.getElementById("calcular").addEventListener("click", calcularCredito);
-        document.getElementById("plazo").addEventListener("change", calcularCredito);
-    </script>    
+
+    <!-- Informativo -->
+    <div class="informativo">
+      <h2>¿Cómo comprar una garantía?</h2>
+
+      <div class="paso"><span class="icono">📄</span><p>Documento de identidad (CC, PEP, CE...)</p></div>
+      <div class="paso"><span class="icono">📦</span><p>Manifiesto de importación</p></div>
+      <div class="paso"><span class="icono">🧾</span><p>Factura de venta</p></div>
+      <div class="paso"><span class="icono">✍️</span><p>Firma del contrato</p></div>
+      <div class="paso"><span class="icono">📲</span><p>Código al celular (firma electrónica)</p></div>
+      <div class="paso"><span class="icono">✅</span><p><strong>¡Listo!</strong> Ya tienes tu garantía Invercycle</p></div>
+      <h2>Beneficios Invercycle</h2>
+      <div class="paso"><span class="icono">💪</span><p><strong>Cobertura amplia:</strong> Hasta el 80% del valor de la moto.</p></div>
+      <div class="paso"><span class="icono">📅</span><p><strong>Planes anuales:</strong> Cobertura por 12 meses continuos.</p></div>
+      <div class="paso"><span class="icono">💸</span><p><strong>Sin deducibles:</strong> No hay descuentos en caso de siniestro.</p></div>
+      <div class="paso"><span class="icono">🔄</span><p><strong>Reposición garantizada:</strong> Indemnización para adquirir una nueva moto si hay pérdida total.</p></div>
+    </div>
+  </div>
+  
+
+  <script>
+    const inputValorMoto = document.getElementById("valorMoto");
+
+    function limpiarNumero(valor) {
+      return valor.replace(/\D/g, "");
+    }
+
+    function formatearMoneda(valor) {
+      return new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        minimumFractionDigits: 0,
+      }).format(valor);
+    }
+
+    function actualizarInputFormateado(e) {
+      const valorLimpio = limpiarNumero(e.target.value);
+      if (!valorLimpio) {
+        e.target.value = "";
+        return;
+      }
+
+      const valorNumerico = parseInt(valorLimpio, 10);
+      e.target.value = formatearMoneda(valorNumerico);
+    }
+
+    function obtenerValorNumericoFormateado(cadenaFormateada) {
+      return parseInt(cadenaFormateada.replace(/\D/g, ""), 10);
+    }
+
+    inputValorMoto.addEventListener("input", actualizarInputFormateado);
+
+    function calcularGarantia() {
+      const valor = obtenerValorNumericoFormateado(inputValorMoto.value);
+      const resultado = document.getElementById("costoGarantia");
+      const candado = document.getElementById("iconoCandado");
+
+      if (isNaN(valor) || valor < 1000000 || valor > 99999999) {
+        alert("Por favor, ingresa un valor válido entre $1,000,000 y $99,999,999.");
+        return;
+      }
+
+      const costoGarantia = valor * 0.08;
+      resultado.textContent = `Costo de la garantía: ${formatearMoneda(costoGarantia)}`;
+
+      candado.classList.remove("visible");
+      void candado.offsetWidth;
+      candado.classList.add("visible");
+    }
+
+    document.getElementById("calcular").addEventListener("click", calcularGarantia);
+  </script>
 </body>
 </html>

@@ -607,18 +607,29 @@
                     formData.append('nombreArchivo', file.name);
                 }
                 
-                // Realizar la solicitud fetch
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    body: formData,
-                    // No establecer Content-Type, el navegador lo configura automáticamente con el boundary correcto para FormData
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
-                }
-                
-                const result = await response.json();
+               // 1. Recopila el formData en un objeto simple
+const data = {};
+formData.forEach((value, key) => {
+  data[key] = value;
+});
+
+// 2. Lanza el fetch sin preflight
+const response = await fetch(scriptURL, {
+  method: 'POST',
+  redirect: 'follow',  // permite seguir la redirección a script.googleusercontent.com
+  headers: {
+    'Content-Type': 'text/plain;charset=utf-8'  // text/plain es un “simple request”
+  },
+  body: JSON.stringify(data)
+});
+
+if (!response.ok) {
+  throw new Error(`Error HTTP: ${response.status}`);
+}
+
+const result = await response.json();
+console.log(result);
+
                 
                 // Mostrar mensaje de éxito
                 statusDiv.textContent = result.message || 'Formulario enviado correctamente';

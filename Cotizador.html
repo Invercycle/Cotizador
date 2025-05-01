@@ -5,129 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Garantía Extendida Invercycle</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
-  <style>
-    body { font-family: 'Poppins', sans-serif; background: #f9f9f9; margin: 0; padding: 0; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; }
-    .main-container { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; max-width: 900px; width: 100%; }
-    .simulador-container, .informativo { flex: 1 1 350px; background: #fff; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 20px; }
-    .simulador-container img { display: block; margin: 0 auto 20px; max-width: 150px; }
-    h1, h2 { color: #FF4500; text-align: center; margin-bottom: 20px; }
-    .campo { margin-bottom: 15px; text-align: left; }
-    .campo label { display: block; margin-bottom: 5px; font-weight: bold; }
-    .campo input, .campo select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
-    .boton { background: #FF4500; color: #fff; border: none; padding: 10px; font-size: 16px; border-radius: 4px; cursor: pointer; width: 100%; margin-bottom: 10px; }
-    .boton:hover { background: #cc3700; }
-    .resultado { margin: 20px 0; font-size: 24px; color: #FF4500; font-weight: bold; }
-    .nota, .financia { font-size: 13px; color: #666; margin-top: 10px; }
-    .flixopay-boton, .whatsapp { display: block; text-align: center; padding: 12px; border-radius: 5px; font-weight: bold; margin-top: 10px; text-decoration: none; }
-    .flixopay-boton { background: #7761ff; color: #fff; }
-    .flixopay-boton:hover { background: #5f4fdc; }
-    .whatsapp { background: #25D366; color: #fff; }
-    .whatsapp:hover { background: #1ebf56; }
-    .candado { font-size: 40px; opacity: 0; transform: scale(0.5); transition: all 0.5s ease; text-align: center; margin: 20px auto 0; }
-    .candado.visible { opacity:1; transform: scale(1.2); animation: bounce 1s ease; }
-    @keyframes bounce { 0%,100% { transform: scale(1.2); } 50% { transform: scale(1); } }
-    .paso { display: flex; align-items: center; margin-bottom: 15px; gap: 10px; }
-    .paso .icono { font-size: 24px; color: #FF4500; width: 30px; text-align: center; }
-    .paso p { margin: 0; font-size: 15px; color: #333; }
-    .metodo-pago { margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
-    .loading { display: none; text-align: center; margin: 20px 0; }
-    .loading-spinner { border: 4px solid rgba(255,69,0,0.3); border-radius:50%; border-top:4px solid #FF4500; width:30px; height:30px; animation:spin 1s linear infinite; margin:0 auto 10px; }
-    @keyframes spin { 0%{transform:rotate(0);} 100%{transform:rotate(360deg);} }
-    @media(max-width:768px){ .main-container{ flex-direction:column; align-items:center;} }
-  </style>
+  <style>/* estilos compactados */ body{font-family:Poppins,sans-serif;background:#f9f9f9;margin:0;padding:0;display:flex;justify-content:center;align-items:flex-start;min-height:100vh} .main-container{display:flex;flex-wrap:wrap;gap:20px;padding:20px;max-width:900px;width:100%} .simulador-container,.informativo{flex:1 1 350px;background:#fff;border:1px solid #ddd;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.1);padding:20px} h1,h2{text-align:center;color:#FF4500;margin-bottom:20px} .campo{margin-bottom:15px;text-align:left} .campo label{display:block;margin-bottom:5px;font-weight:bold} .campo input,.campo select{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;font-size:16px} .boton{background:#FF4500;color:#fff;border:none;padding:10px;font-size:16px;border-radius:4px;cursor:pointer;width:100%;margin-bottom:10px} .boton:hover{background:#cc3700} .resultado{margin:20px 0;font-size:24px;color:#FF4500;font-weight:bold} .nota,.financia{font-size:13px;color:#666;margin-top:10px} .flixopay-boton,.whatsapp{display:block;text-align:center;padding:12px;border-radius:5px;font-weight:bold;margin-top:10px;text-decoration:none} .flixopay-boton{background:#7761ff;color:#fff}.flixopay-boton:hover{background:#5f4fdc}.whatsapp{background:#25D366;color:#fff}.whatsapp:hover{background:#1ebf56}.candado{font-size:40px;opacity:0;transform:scale(.5);transition:all .5s ease;text-align:center;margin:20px auto 0}.candado.visible{opacity:1;transform:scale(1.2);animation:bounce 1s ease}@keyframes bounce{0%,100%{transform:scale(1.2)}50%{transform:scale(1)}} .paso{display:flex;align-items:center;margin-bottom:15px;gap:10px}.paso .icono{font-size:24px;color:#FF4500;width:30px;text-align:center}.paso p{margin:0;font-size:15px;color:#333}.metodo-pago{margin-top:20px;border-top:1px solid #eee;padding-top:15px}.loading{display:none;text-align:center;margin:20px 0}.loading-spinner{border:4px solid rgba(255,69,0,.3);border-radius:50%;border-top:4px solid#FF4500;width:30px;height:30px;animation:spin 1s linear infinite;margin:0 auto 10px}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@media(max-width:768px){.main-container{flex-direction:column;align-items:center}}</style>
 </head>
 <body>
   <div class="main-container">
     <div class="simulador-container">
-      <img src="https://panamericana.vtexassets.com/arquivos/ids/487369/garantia-extendida-1-ano-460049.jpg" alt="Logo Invercycle">
       <h1>Cotizador Invercycle</h1>
-      <div class="campo">
-        <label for="valorMoto">Valor de la moto (sin documentos)</label>
-        <input type="text" id="valorMoto" placeholder="Ingresa el valor">
-      </div>
+      <div class="campo"><label for="valorMoto">Valor de la moto (sin docs)</label><input type="text" id="valorMoto" placeholder="Ingresa el valor"></div>
       <button id="calcular" class="boton">Calcular</button>
       <div id="costoGarantia" class="resultado">Costo de la garantía: $0</div>
       <div id="iconoCandado" class="candado">🔒</div>
       <button id="comprarBtn" class="boton" style="display:none;">Comprar garantía</button>
-      <p class="nota">Estimación (8% sobre valor sin documentos).</p>
+      <p class="nota">Estimación (8% sobre valor).</p>
       <p class="financia">¿No puedes pagar de contado? ¡Financia con Flixopay!</p>
       <a class="flixopay-boton" href="https://aliados.flixopay.com" target="_blank">💳 Flixopay</a>
-      <a class="whatsapp" href="https://api.whatsapp.com/send/?phone=573045889263&text=Quiero%20una%20garantía%20extendida" target="_blank">📲 WhatsApp</a>
+      <a class="whatsapp" href="https://api.whatsapp.com/send/?phone=573045889263&text=Quiero%20una%20garant%C3%ADa" target="_blank">📲 WhatsApp</a>
     </div>
     <div class="informativo">
-      <h2>¿Cómo comprar una garantía?</h2>
-      <div class="paso"><span class="icono">📄</span><p>Documento de identidad</p></div>
-      <div class="paso"><span class="icono">📦</span><p>Manifiesto de importación</p></div>
-      <div class="paso"><span class="icono">🧾</span><p>Factura de venta</p></div>
-      <div class="paso"><span class="icono">✍️</span><p>Firma del contrato</p></div>
-      <div class="paso"><span class="icono">📲</span><p>Código al celular</p></div>
-      <div class="paso"><span class="icono">✅</span><p><strong>¡Listo!</strong></p></div>
-      <h2>Beneficios Invercycle</h2>
-      <div class="paso"><span class="icono">💪</span><p>Cobertura amplia: hasta 80%</p></div>
-      <div class="paso"><span class="icono">📅</span><p>Planes anuales</p></div>
-      <div class="paso"><span class="icono">💸</span><p>Sin deducibles</p></div>
-      <div class="paso"><span class="icono">🔄</span><p>Reposición garantizada</p></div>
+      <h2>Cómo comprar</h2>
+      <div class="paso"><span class="icono">📄</span><p>Documento</p></div>
+      <div class="paso"><span class="icono">📦</span><p>Manifiesto</p></div>
+      <div class="paso"><span class="icono">🧾</span><p>Factura</p></div>
+      <div class="paso"><span class="icono">✍️</span><p>Contrato</p></div>
+      <div class="paso"><span class="icono">📲</span><p>Código</p></div>
+      <div class="paso"><span class="icono">✅</span><p>Listo</p></div>
     </div>
   </div>
-  <div id="formularioCompra" style="display:none; max-width:900px; margin:20px auto;">
-    <h2 style="color:#FF4500;text-align:center;">Información de compra</h2>
+  <div id="formularioCompra" style="display:none;max-width:900px;margin:20px auto;">
+    <h2 style="text-align:center;color:#FF4500;">Info de compra</h2>
     <form id="uploadForm">
-      <div class="campo"><label for="nombre">Nombre:</label><input type="text" id="nombre" name="nombre" required></div>
-      <div class="campo"><label for="email">Email:</label><input type="email" id="email" name="email" required></div>
-      <div class="campo"><label for="telefono">Teléfono:</label><input type="tel" id="telefono" name="telefono" required></div>
-      <h3 style="color:#FF4500;">Documentos</h3>
-      <div class="campo"><label for="cedula">Cédula:</label><input type="file" id="cedula" name="cedula" accept="image/*,application/pdf" required></div>
-      <div class="campo"><label for="factura">Factura:</label><input type="file" id="factura" name="factura" accept="image/*,application/pdf" required></div>
-      <div class="campo"><label for="manifiesto">Manifiesto:</label><input type="file" id="manifiesto" name="manifiesto" accept="image/*,application/pdf" required></div>
-      <div class="campo"><label for="tienda">Tienda:</label><select id="tienda" name="tienda" required><option value="">Elige...</option><option>Motocampo</option><option>Moto Home</option><option>Motos del mar</option></select></div>
-      <div class="campo"><label for="vendedor">Vendedor:</label><input type="text" id="vendedor" name="vendedor" required></div>
-      <div class="metodo-pago"><div class="metodo-pago-titulo">Pago:</div>
-        <div class="paso"><input type="radio" name="metodoPago" value="motocampo" checked> Directo</div>
-        <div class="paso"><input type="radio" name="metodoPago" value="flixopay"> Flixopay</div>
-      </div>
-      <div id="mensajeError" style="color:red; display:none; margin:10px 0;"></div>
+      <div class="campo"><label for="nombre">Nombre</label><input type="text" id="nombre" name="nombre" required></div>
+      <div class="campo"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+      <div class="campo"><label for="telefono">Teléfono</label><input type="tel" id="telefono" name="telefono" required></div>
+      <h3 style="color:#FF4500;">Docs (imágenes o PDF)</h3>
+      <div class="campo"><label for="cedula">Cédula</label><input type="file" id="cedula" name="cedula" accept="image/*,application/pdf" required></div>
+      <div class="campo"><label for="factura">Factura</label><input type="file" id="factura" name="factura" accept="image/*,application/pdf" required></div>
+      <div class="campo"><label for="manifiesto">Manifiesto</label><input type="file" id="manifiesto" name="manifiesto" accept="image/*,application/pdf" required></div>
+      <div class="campo"><label for="tienda">Tienda</label><select id="tienda" name="tienda" required><option value="">Elige</option><option>Motocampo</option><option>Moto Home</option><option>Motos del mar</option></select></div>
+      <div class="campo"><label for="vendedor">Vendedor</label><input type="text" id="vendedor" name="vendedor" required></div>
+      <div class="metodo-pago"><div class="metodo-pago-titulo">Pago</div><label><input type="radio" name="metodoPago" value="motocampo" checked>Directo</label><label><input type="radio" name="metodoPago" value="flixopay">Flixopay</label></div>
+      <div id="mensajeError" style="color:red;display:none;margin:10px 0;"></div>
       <div class="loading" id="loadingIndicator"><div class="loading-spinner"></div><p>Procesando...</p></div>
       <button type="submit" class="boton">Enviar</button>
     </form>
   </div>
   <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const valorInput = document.getElementById('valorMoto');
-      const calcBtn = document.getElementById('calcular');
-      const costoEl = document.getElementById('costoGarantia');
-      const candado = document.getElementById('iconoCandado');
-      const buyBtn = document.getElementById('comprarBtn');
-      const formSection = document.getElementById('formularioCompra');
-      const form = document.getElementById('uploadForm');
-      const loader = document.getElementById('loadingIndicator');
-      const errEl = document.getElementById('mensajeError');
-      const URL = 'https://script.google.com/macros/s/AKfycbxTN0X3zdBk-SSuH5l-oqvnBjT34VKj8lKsDMnEJH8wSfSAUq1Xw3a5fmgoMDpA9U8/exec';
-      let val=0, cost=0;
-      const fmt = v=>new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',minimumFractionDigits:0}).format(v);
-      valorInput.addEventListener('input',e=>{const n=e.target.value.replace(/\D/g,'');e.target.value=n?fmt(+n):'';});
-      calcBtn.addEventListener('click',()=>{
-        const n=+valorInput.value.replace(/\D/g,'');
-        if(!n||n<1e6||n>1e8) return alert('Ingresa valor entre $1.000.000 y $99.999.999');
-        val=n; cost=Math.round(n*0.08);
-        costoEl.textContent=`Costo de la garantía: ${fmt(cost)}`;
-        candado.classList.remove('visible');void candado.offsetWidth; candado.classList.add('visible');
-        buyBtn.style.display='block';
-      });
-      buyBtn.addEventListener('click',()=>{
-        formSection.style.display=formSection.style.display==='none'?'block':'none';
-        if(formSection.style.display==='block') formSection.scrollIntoView({behavior:'smooth'});
-      });
+    document.addEventListener('DOMContentLoaded',()=>{
+      const valorIn=document.getElementById('valorMoto'), calcBtn=document.getElementById('calcular'), costEl=document.getElementById('costoGarantia'), lock=document.getElementById('iconoCandado'), buyBtn=document.getElementById('comprarBtn'), section=document.getElementById('formularioCompra'), form=document.getElementById('uploadForm'), loader=document.getElementById('loadingIndicator'), errEl=document.getElementById('mensajeError');
+      const URL='https://script.google.com/macros/s/AKfycbzGLQbstisTxWkqaFRdv7wcNTFNEj1pe1Qqk5K94Nrn2viiMQPmxrBIEs0f-E5bX0c/exec'; let val=0,cost=0;
+      const fmt=v=>new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',minimumFractionDigits:0}).format(v);
+      valorIn.addEventListener('input',e=>{const n=e.target.value.replace(/\D/g,'');e.target.value=n?fmt(+n):''});
+      calcBtn.addEventListener('click',()=>{const n=+valorIn.value.replace(/\D/g,''); if(!n||n<1e6||n>1e8)return alert('Valor entre $1.000.000 y $99.999.999'); val=n; cost=Math.round(n*0.08); costEl.textContent=`Costo de la garantía: ${fmt(cost)}`; lock.classList.remove('visible');void lock.offsetWidth;lock.classList.add('visible');buyBtn.style.display='block'});
+      buyBtn.addEventListener('click',()=>{section.style.display=section.style.display==='none'?'block':'none'; if(section.style.display==='block')section.scrollIntoView({behavior:'smooth'})});
       form.addEventListener('submit',async e=>{
         e.preventDefault(); errEl.style.display='none'; loader.style.display='block';
         try{
-          const fd=new FormData(form); const files=[ 'cedula','factura','manifiesto' ].map(id=>fd.get(id));
-          const conv=await Promise.all(files.map(f=>f.arrayBuffer().then(buf=>btoa(String.fromCharCode(...new Uint8Array(buf))))));
-          const data={ nombre:fd.get('nombre'), email:fd.get('email'), telefono:fd.get('telefono'), tienda:fd.get('tienda'), vendedor:fd.get('vendedor'), metodoPago:fd.get('metodoPago'), valorMoto:fmt(val), costoGarantia:fmt(cost), files:[ { name:files[0].name, content:conv[0] },{ name:files[1].name, content:conv[1] },{ name:files[2].name, content:conv[2] } ] };
-          const res=await fetch(URL,{ method:'POST', redirect:'follow', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body:JSON.stringify(data) });
-          if(!res.ok) throw new Error(`HTTP ${res.status}`);
-          const json=await res.json(); loader.style.display='none';
-          if(json.success){ alert('Solicitud enviada'); form.reset(); formSection.style.display='none'; if(data.metodoPago==='flixopay') window.location.href='https://aliados.flixopay.com'; }
-          else throw new Error(json.message||'Error servidor');
+          const fd=new FormData(form), files=['cedula','factura','manifiesto'].map(id=>fd.get(id));
+          const encoded=await Promise.all(files.map(f=>f.arrayBuffer().then(buf=>btoa(String.fromCharCode(...new Uint8Array(buf))))));
+          const payload={ nombre:fd.get('nombre'), email:fd.get('email'), telefono:fd.get('telefono'), tienda:fd.get('tienda'), vendedor:fd.get('vendedor'), metodoPago:fd.get('metodoPago'), valorMoto:fmt(val), costoGarantia:fmt(cost), files:files.map((f,i)=>({name:f.name,content:encoded[i]})) };
+          const res=await fetch(URL,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+          loader.style.display='none';
+          if(!res.ok){ const text=await res.text(); throw new Error(text||`HTTP ${res.status}`);}          
+          const ctype=res.headers.get('content-type')||'';
+          let json;
+          if(ctype.includes('application/json')) json=await res.json();
+          else { const txt=await res.text(); throw new Error(txt);}          
+          if(json.success){ alert('Solicitud enviada'); form.reset(); section.style.display='none'; if(payload.metodoPago==='flixopay') location.href='https://aliados.flixopay.com';}
+          else throw new Error(json.message||'Error en servidor');
         }catch(err){ console.error(err); loader.style.display='none'; errEl.textContent=err.message; errEl.style.display='block'; }
       });
     });

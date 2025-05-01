@@ -59,7 +59,7 @@
       font-weight: bold;
     }
 
-    .campo input {
+    .campo input, .campo select {
       width: 100%;
       padding: 8px;
       border: 1px solid #ccc;
@@ -126,15 +126,14 @@
     }
 
     .candado {
-  font-size: 40px;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.5s ease-in-out;
-  text-align: center;
-  margin: 20px auto 0;
-  display: block;
-}
-
+      font-size: 40px;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.5s ease-in-out;
+      text-align: center;
+      margin: 20px auto 0;
+      display: block;
+    }
 
     .candado.visible {
       opacity: 1;
@@ -175,6 +174,59 @@
       color: #333;
     }
 
+    .metodo-pago {
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+    }
+
+    .metodo-pago-titulo {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .opcion-pago {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .opcion-pago input {
+      margin-right: 10px;
+    }
+
+    .opcion-pago label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .opcion-pago img {
+      height: 30px;
+      margin-left: 10px;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .loading-spinner {
+      border: 4px solid rgba(255, 69, 0, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid #FF4500;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     @media (max-width: 768px) {
       .main-container {
         flex-direction: column;
@@ -197,6 +249,76 @@
         <button class="boton" id="calcular">Calcular</button>
         <div class="resultado" id="costoGarantia">Costo de la garantía: $0</div>
         <div id="iconoCandado" class="candado">🔒</div>
+        <button class="boton" id="comprarBtn" style="display: none;">Comprar garantía</button>
+
+        <!-- Formulario de carga -->
+        <div id="formularioCompra" style="display: none; margin-top: 20px;">
+          <h2 style="color: #FF4500; font-size: 18px;">Información de contacto</h2>
+          
+          <form id="uploadForm">
+            <!-- Información personal -->
+            <div class="campo">
+              <label for="nombre">Nombre completo:</label>
+              <input type="text" id="nombre" name="nombre" required placeholder="Nombre y apellidos">
+            </div>
+            
+            <div class="campo">
+              <label for="email">Correo electrónico:</label>
+              <input type="email" id="email" name="email" required placeholder="ejemplo@correo.com">
+            </div>
+            
+            <div class="campo">
+              <label for="telefono">Teléfono celular:</label>
+              <input type="tel" id="telefono" name="telefono" required placeholder="300 123 4567">
+            </div>
+            
+            <!-- Documentos requeridos -->
+            <h2 style="color: #FF4500; font-size: 18px; margin-top: 20px;">Documentos requeridos</h2>
+            
+            <div class="campo">
+              <label for="cedula">Documento de identidad:</label>
+              <input type="file" id="cedula" name="cedula" required>
+            </div>
+            
+            <div class="campo">
+              <label for="factura">Factura de la moto:</label>
+              <input type="file" id="factura" name="factura" required>
+            </div>
+            
+            <div class="campo">
+              <label for="manifiesto">Manifiesto de importación:</label>
+              <input type="file" id="manifiesto" name="manifiesto" required>
+            </div>
+            
+            <!-- Método de pago -->
+            <div class="metodo-pago">
+              <div class="metodo-pago-titulo">Selecciona tu método de pago:</div>
+              
+              <div class="opcion-pago">
+                <input type="radio" id="pagoMotocampo" name="metodoPago" value="motocampo" checked>
+                <label for="pagoMotocampo">
+                  Pago directo por Motocampo
+                </label>
+              </div>
+              
+              <div class="opcion-pago">
+                <input type="radio" id="pagoFlixopay" name="metodoPago" value="flixopay">
+                <label for="pagoFlixopay">
+                  Financiar con FlixoPay
+                </label>
+              </div>
+            </div>
+            
+            <!-- Botón de envío -->
+            <div class="loading" id="loadingIndicator">
+              <div class="loading-spinner"></div>
+              <p>Procesando tu solicitud...</p>
+            </div>
+            
+            <button type="submit" class="boton" style="margin-top: 20px;">Enviar solicitud</button>
+          </form>
+        </div>
+
         <p class="nota">
           Este valor es una estimación del costo de la garantía extendida de Invercycle (8% sobre el valor de la moto sin documentos).
         </p>
@@ -211,7 +333,6 @@
     <!-- Informativo -->
     <div class="informativo">
       <h2>¿Cómo comprar una garantía?</h2>
-
       <div class="paso"><span class="icono">📄</span><p>Documento de identidad (CC, PEP, CE...)</p></div>
       <div class="paso"><span class="icono">📦</span><p>Manifiesto de importación</p></div>
       <div class="paso"><span class="icono">🧾</span><p>Factura de venta</p></div>
@@ -222,13 +343,19 @@
       <div class="paso"><span class="icono">💪</span><p><strong>Cobertura amplia:</strong> Hasta el 80% del valor de la moto.</p></div>
       <div class="paso"><span class="icono">📅</span><p><strong>Planes anuales:</strong> Cobertura por 12 meses continuos.</p></div>
       <div class="paso"><span class="icono">💸</span><p><strong>Sin deducibles:</strong> No hay descuentos en caso de siniestro.</p></div>
-      <div class="paso"><span class="icono">🔄</span><p><strong>Reposición garantizada:</strong> Indemnización para adquirir una nueva moto si hay pérdida total.</p></div>
+      <div class="paso"><span class="icono">🔄</span><p><strong>Reposición garantizada:</strong> El dinero puede ser usado para adquirir una nueva moto si hay pérdida total.</p></div>
     </div>
   </div>
-  
 
   <script>
     const inputValorMoto = document.getElementById("valorMoto");
+    const comprarBtn = document.getElementById("comprarBtn");
+    const formularioCompra = document.getElementById("formularioCompra");
+    const loadingIndicator = document.getElementById("loadingIndicator");
+
+    // Valores globales para guardar
+    let valorMotoActual = 0;
+    let costoGarantiaActual = 0;
 
     function limpiarNumero(valor) {
       return valor.replace(/\D/g, "");
@@ -242,22 +369,9 @@
       }).format(valor);
     }
 
-    function actualizarInputFormateado(e) {
-      const valorLimpio = limpiarNumero(e.target.value);
-      if (!valorLimpio) {
-        e.target.value = "";
-        return;
-      }
-
-      const valorNumerico = parseInt(valorLimpio, 10);
-      e.target.value = formatearMoneda(valorNumerico);
-    }
-
     function obtenerValorNumericoFormateado(cadenaFormateada) {
       return parseInt(cadenaFormateada.replace(/\D/g, ""), 10);
     }
-
-    inputValorMoto.addEventListener("input", actualizarInputFormateado);
 
     function calcularGarantia() {
       const valor = obtenerValorNumericoFormateado(inputValorMoto.value);
@@ -269,15 +383,122 @@
         return;
       }
 
-      const costoGarantia = valor * 0.08;
-      resultado.textContent = `Costo de la garantía: ${formatearMoneda(costoGarantia)}`;
+      // Guardar valores
+      valorMotoActual = valor;
+      costoGarantiaActual = valor * 0.08;
+      
+      resultado.textContent = `Costo de la garantía: ${formatearMoneda(costoGarantiaActual)}`;
+      comprarBtn.style.display = "block";
 
       candado.classList.remove("visible");
       void candado.offsetWidth;
       candado.classList.add("visible");
     }
 
+    inputValorMoto.addEventListener("input", function (e) {
+      const valorLimpio = limpiarNumero(e.target.value);
+      e.target.value = valorLimpio ? formatearMoneda(parseInt(valorLimpio)) : "";
+    });
+
     document.getElementById("calcular").addEventListener("click", calcularGarantia);
+
+    comprarBtn.addEventListener("click", () => {
+      formularioCompra.style.display = formularioCompra.style.display === "none" ? "block" : "none";
+    });
+
+    // Validar formato de teléfono
+    document.getElementById("telefono").addEventListener("input", function(e) {
+      const input = e.target;
+      let value = input.value.replace(/\D/g, '');
+      
+      if (value.length > 10) {
+        value = value.slice(0, 10);
+      }
+      
+      if (value.length > 7) {
+        value = value.slice(0, 3) + ' ' + value.slice(3, 6) + ' ' + value.slice(6);
+      } else if (value.length > 3) {
+        value = value.slice(0, 3) + ' ' + value.slice(3);
+      }
+      
+      input.value = value;
+    });
+
+    document.getElementById("uploadForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      
+      // Mostrar indicador de carga
+      loadingIndicator.style.display = "block";
+      
+      try {
+        const form = e.target;
+        
+        // Información del cliente
+        const nombre = form.nombre.value;
+        const email = form.email.value;
+        const telefono = form.telefono.value;
+        const metodoPago = document.querySelector('input[name="metodoPago"]:checked').value;
+        
+        // Archivos
+        const files = [
+          { file: form.cedula.files[0] },
+          { file: form.factura.files[0] },
+          { file: form.manifiesto.files[0] }
+        ];
+
+        // Convertir archivos a base64
+        const convertedFiles = await Promise.all(files.map(async f => {
+          const content = await f.file.arrayBuffer();
+          return {
+            name: f.file.name,
+            type: f.file.type,
+            content: btoa(String.fromCharCode(...new Uint8Array(content)))
+          };
+        }));
+
+        // Crear el objeto de datos a enviar
+        const dataToSend = {
+          files: convertedFiles,
+          nombre: nombre,
+          email: email,
+          telefono: telefono,
+          valorMoto: formatearMoneda(valorMotoActual),
+          costoGarantia: formatearMoneda(costoGarantiaActual),
+          metodoPago: metodoPago
+        };
+
+        // Enviar al backend
+        const response = await fetch("https://script.google.com/macros/s/AKfycbxTN0X3zdBk-SSuH5l-oqvnBjT34VKj8lKsDMnEJH8wSfSAUq1Xw3a5fmgoMDpA9U8/exec", {
+          method: "POST",
+          body: JSON.stringify(dataToSend),
+          headers: { "Content-Type": "application/json" }
+        });
+
+        const result = await response.json();
+        
+        // Ocultar indicador de carga
+        loadingIndicator.style.display = "none";
+        
+        if (result.success) {
+          // Redirigir según método de pago
+          if (metodoPago === "flixopay") {
+            alert("¡Solicitud recibida! Serás redirigido a FlixoPay para completar la financiación.");
+            window.location.href = "https://aliados.flixopay.com";
+          } else {
+            alert("¡Solicitud recibida con éxito! En breve un asesor se pondrá en contacto contigo.");
+            // Reiniciar formulario
+            form.reset();
+            formularioCompra.style.display = "none";
+          }
+        } else {
+          alert("Error: " + result.message);
+        }
+      } catch (error) {
+        console.error("Error al enviar el formulario:", error);
+        loadingIndicator.style.display = "none";
+        alert("Ocurrió un error al procesar tu solicitud. Por favor, intenta nuevamente.");
+      }
+    });
   </script>
 </body>
 </html>

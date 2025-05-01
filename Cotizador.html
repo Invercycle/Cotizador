@@ -584,6 +584,112 @@
         mensajeError.textContent = "No se pudo enviar el formulario. Por favor, contacta directamente con nuestro equipo por WhatsApp.";
       }
     }
-  </script>
+
+   document.getElementById('cotizadorForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = '';
+            statusDiv.style.display = 'none';
+            statusDiv.textContent = '';
+            
+            // URL de tu Google Apps Script publicado como aplicación web
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzGLQbstisTxWkqaFRdv7wcNTFNEj1pe1Qqk5K94Nrn2viiMQPmxrBIEs0f-E5bX0c/exec';
+            
+            try {
+                // Para formularios con archivos necesitamos usar FormData
+                const formData = new FormData(this);
+                
+                // Obtener el archivo
+                const fileInput = document.getElementById('archivo');
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    formData.append('nombreArchivo', file.name);
+                }
+                
+                // Realizar la solicitud fetch
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: formData,
+                    // No establecer Content-Type, el navegador lo configura automáticamente con el boundary correcto para FormData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                // Mostrar mensaje de éxito
+                statusDiv.textContent = result.message || 'Formulario enviado correctamente';
+                statusDiv.className = 'success';
+                statusDiv.style.display = 'block';
+                
+                // Limpiar el formulario
+                this.reset();
+                
+            } catch (error) {
+                console.error('Error al enviar el formulario:', error);
+                
+                // Mostrar mensaje de error
+                statusDiv.textContent = `Error al enviar el formulario: ${error.message}`;
+                statusDiv.className = 'error';
+                statusDiv.style.display = 'block';
+            }
+        });
+        document.getElementById('cotizadorForm').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          const statusDiv = document.getElementById('status');
+          statusDiv.className = '';
+          statusDiv.style.display = 'none';
+          statusDiv.textContent = '';
+          
+          // URL de tu Google Apps Script publicado como aplicación web
+          const scriptURL = 'https://script.google.com/macros/s/AKfycbzGLQbstisTxWkqaFRdv7wcNTFNEj1pe1Qqk5K94Nrn2viiMQPmxrBIEs0f-E5bX0c/exec';
+          
+          try {
+              // Para formularios con archivos necesitamos usar FormData
+              const formData = new FormData(this);
+              
+              // Obtener el archivo
+              const fileInput = document.getElementById('archivo');
+              if (fileInput.files.length > 0) {
+                  const file = fileInput.files[0];
+                  formData.append('nombreArchivo', file.name);
+              }
+              
+              // Realizar la solicitud fetch
+              const response = await fetch(scriptURL, {
+                  method: 'POST',
+                  body: formData,
+                  // No establecer Content-Type, el navegador lo configura automáticamente con el boundary correcto para FormData
+              });
+              
+              if (!response.ok) {
+                  throw new Error(`Error HTTP: ${response.status}`);
+              }
+              
+              const result = await response.json();
+              
+              // Mostrar mensaje de éxito
+              statusDiv.textContent = result.message || 'Formulario enviado correctamente';
+              statusDiv.className = 'success';
+              statusDiv.style.display = 'block';
+              
+              // Limpiar el formulario
+              this.reset();
+              
+          } catch (error) {
+              console.error('Error al enviar el formulario:', error);
+              
+              // Mostrar mensaje de error
+              statusDiv.textContent = `Error al enviar el formulario: ${error.message}`;
+              statusDiv.className = 'error';
+              statusDiv.style.display = 'block';
+          }
+      });
+  
+    </script>
 </body>
 </html>

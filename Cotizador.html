@@ -253,7 +253,7 @@
 
         <!-- Formulario de carga -->
         <div id="formularioCompra" style="display: none; margin-top: 20px;">
-          <h2 style="color: #FF4500; font-size: 18px;">Información de contacto</h2>
+          <h2 style="color: #FF4500; font-size: 18px;">Información de cliente</h2>
           
           <form id="uploadForm">
             <!-- Información personal -->
@@ -289,6 +289,27 @@
               <label for="manifiesto">Manifiesto de importación:</label>
               <input type="file" id="manifiesto" name="manifiesto" required>
             </div>
+            <div class="campo">
+              <label for="telefono">Teléfono celular:</label>
+              <input type="tel" id="telefono" name="telefono" required placeholder="300 123 4567">
+            </div>
+            
+            <div class="campo">
+              <label for="tienda">Tienda:</label>
+              <select id="tienda" name="tienda" required>
+                <option value="">Selecciona una tienda</option>
+                <option value="Bogotá Centro">Motocampo</option>
+                <option value="Bogotá Centro">Moto Home</option>
+                <option value="Bogotá Centro">Motos del mar</option>
+              </select>
+            </div>
+            
+            <div class="campo">
+              <label for="vendedor">Vendedor:</label>
+              <input type="text" id="vendedor" name="vendedor" required placeholder="Nombre del asesor">
+            </div>
+            
+            <!-- Documentos requeridos -->
             
             <!-- Método de pago -->
             <div class="metodo-pago">

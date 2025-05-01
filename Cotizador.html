@@ -295,9 +295,9 @@
               <label for="tienda">Tienda:</label>
               <select id="tienda" name="tienda" required>
                 <option value="">Selecciona una tienda</option>
-                <option value="Bogotá Centro">Motocampo</option>
-                <option value="Bogotá Centro">Moto Home</option>
-                <option value="Bogotá Centro">Motos del mar</option>
+                <option value="Motocampo">Motocampo</option>
+                <option value="Moto Home">Moto Home</option>
+                <option value="Motos del mar">Motos del mar</option>
               </select>
             </div>
             
@@ -333,6 +333,7 @@
               <p>Procesando tu solicitud...</p>
             </div>
             
+            <div id="mensajeError" style="color: red; margin: 10px 0; display: none;"></div>
             <button type="submit" class="boton" style="margin-top: 20px;">Enviar solicitud</button>
           </form>
         </div>
@@ -370,6 +371,10 @@
     const comprarBtn = document.getElementById("comprarBtn");
     const formularioCompra = document.getElementById("formularioCompra");
     const loadingIndicator = document.getElementById("loadingIndicator");
+    const mensajeError = document.getElementById("mensajeError");
+
+    // URL del script de Google Apps Script (actualiza a tu URL)
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTN0X3zdBk-SSuH5l-oqvnBjT34VKj8lKsDMnEJH8wSfSAUq1Xw3a5fmgoMDpA9U8/exec";
 
     // Valores globales para guardar
     let valorMotoActual = 0;
@@ -445,6 +450,9 @@
     document.getElementById("uploadForm").addEventListener("submit", async function (e) {
       e.preventDefault();
       
+      // Ocultar mensaje de error previo
+      mensajeError.style.display = "none";
+      
       // Mostrar indicador de carga
       loadingIndicator.style.display = "block";
       
@@ -455,7 +463,14 @@
         const nombre = form.nombre.value;
         const email = form.email.value;
         const telefono = form.telefono.value;
+        const tienda = form.tienda.value;
+        const vendedor = form.vendedor.value;
         const metodoPago = document.querySelector('input[name="metodoPago"]:checked').value;
+        
+        // Validar que se hayan completado los campos obligatorios
+        if (!nombre || !email || !telefono || !tienda || !vendedor) {
+          throw new Error("Por favor, completa todos los campos obligatorios.");
+        }
         
         // Archivos
         const files = [
@@ -463,15 +478,25 @@
           { file: form.factura.files[0] },
           { file: form.manifiesto.files[0] }
         ];
+        
+        // Validar que se hayan subido todos los archivos
+        if (!form.cedula.files[0] || !form.factura.files[0] || !form.manifiesto.files[0]) {
+          throw new Error("Por favor, sube todos los documentos requeridos.");
+        }
 
         // Convertir archivos a base64
         const convertedFiles = await Promise.all(files.map(async f => {
-          const content = await f.file.arrayBuffer();
-          return {
-            name: f.file.name,
-            type: f.file.type,
-            content: btoa(String.fromCharCode(...new Uint8Array(content)))
-          };
+          try {
+            const content = await f.file.arrayBuffer();
+            return {
+              name: f.file.name,
+              type: f.file.type,
+              content: btoa(String.fromCharCode(...new Uint8Array(content)))
+            };
+          } catch (err) {
+            console.error("Error procesando archivo:", err);
+            throw new Error("Error al procesar los archivos. Por favor, intenta con archivos más pequeños.");
+          }
         }));
 
         // Crear el objeto de datos a enviar
@@ -480,16 +505,21 @@
           nombre: nombre,
           email: email,
           telefono: telefono,
+          tienda: tienda,
+          vendedor: vendedor,
           valorMoto: formatearMoneda(valorMotoActual),
           costoGarantia: formatearMoneda(costoGarantiaActual),
           metodoPago: metodoPago
         };
-
-        // Enviar al backend
-        const response = await fetch("https://script.google.com/macros/s/AKfycbzGLQbstisTxWkqaFRdv7wcNTFNEj1pe1Qqk5K94Nrn2viiMQPmxrBIEs0f-E5bX0c/exec", {
+        
+        // Primera opción: Usar fetch con modo 'cors' explícito
+        const response = await fetch(SCRIPT_URL, {
           method: "POST",
+          mode: "cors",
           body: JSON.stringify(dataToSend),
-          headers: { "Content-Type": "application/json" }
+          headers: { 
+            "Content-Type": "application/json"
+          }
         });
 
         const result = await response.json();
@@ -509,14 +539,51 @@
             formularioCompra.style.display = "none";
           }
         } else {
-          alert("Error: " + result.message);
+          mensajeError.textContent = "Error: " + (result.message || "No se pudo procesar la solicitud");
+          mensajeError.style.display = "block";
         }
       } catch (error) {
         console.error("Error al enviar el formulario:", error);
         loadingIndicator.style.display = "none";
-        alert("Ocurrió un error al procesar tu solicitud. Por favor, intenta nuevamente.");
+        
+        // Mostrar mensaje de error
+        mensajeError.textContent = error.message || "Ocurrió un error al procesar tu solicitud. Por favor, intenta nuevamente.";
+        mensajeError.style.display = "block";
+        
+        // Si el error es de CORS, intentar con proxy o explicar al usuario
+        if (error.message && error.message.includes("CORS")) {
+          // Segunda opción: Implementar un método alternativo si el CORS sigue siendo un problema
+          segundoMetodoEnvio(dataToSend);
+        }
       }
     });
+    
+    // Método alternativo de envío si CORS falla
+    async function segundoMetodoEnvio(dataToSend) {
+      try {
+        mensajeError.textContent = "Intentando método alternativo de envío...";
+        
+        // Creamos un formulario para enviar por POST
+        const formData = new FormData();
+        formData.append('data', JSON.stringify(dataToSend));
+        
+        // Usando no-cors como último recurso (no podremos leer la respuesta)
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formData
+        });
+        
+        // Al usar no-cors, no podemos leer la respuesta, así que asumimos éxito
+        alert("La solicitud ha sido enviada. Un asesor se pondrá en contacto contigo pronto.");
+        document.getElementById("uploadForm").reset();
+        formularioCompra.style.display = "none";
+        mensajeError.style.display = "none";
+      } catch (error) {
+        console.error("Error en método alternativo:", error);
+        mensajeError.textContent = "No se pudo enviar el formulario. Por favor, contacta directamente con nuestro equipo por WhatsApp.";
+      }
+    }
   </script>
 </body>
 </html>

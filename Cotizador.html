@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Garantía Extendida Invercycle</title>
+  <!-- Prevent default favicon request -->
+  <link rel="icon" href="data:;base64,=" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>/* estilos compactados */ body{font-family:Poppins,sans-serif;background:#f9f9f9;margin:0;padding:0;display:flex;justify-content:center;align-items:flex-start;min-height:100vh} .main-container{display:flex;flex-wrap:wrap;gap:20px;padding:20px;max-width:900px;width:100%} .simulador-container,.informativo{flex:1 1 350px;background:#fff;border:1px solid #ddd;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.1);padding:20px} h1,h2{text-align:center;color:#FF4500;margin-bottom:20px} .campo{margin-bottom:15px;text-align:left} .campo label{display:block;margin-bottom:5px;font-weight:bold} .campo input,.campo select{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;font-size:16px} .boton{background:#FF4500;color:#fff;border:none;padding:10px;font-size:16px;border-radius:4px;cursor:pointer;width:100%;margin-bottom:10px} .boton:hover{background:#cc3700} .resultado{margin:20px 0;font-size:24px;color:#FF4500;font-weight:bold} .nota,.financia{font-size:13px;color:#666;margin-top:10px} .flixopay-boton,.whatsapp{display:block;text-align:center;padding:12px;border-radius:5px;font-weight:bold;margin-top:10px;text-decoration:none} .flixopay-boton{background:#7761ff;color:#fff}.flixopay-boton:hover{background:#5f4fdc}.whatsapp{background:#25D366;color:#fff}.whatsapp:hover{background:#1ebf56}.candado{font-size:40px;opacity:0;transform:scale(.5);transition:all .5s ease;text-align:center;margin:20px auto 0}.candado.visible{opacity:1;transform:scale(1.2);animation:bounce 1s ease}@keyframes bounce{0%,100%{transform:scale(1.2)}50%{transform:scale(1)}} .paso{display:flex;align-items:center;margin-bottom:15px;gap:10px}.paso .icono{font-size:24px;color:#FF4500;width:30px;text-align:center}.paso p{margin:0;font-size:15px;color:#333}.metodo-pago{margin-top:20px;border-top:1px solid #eee;padding-top:15px}.loading{display:none;text-align:center;margin:20px 0}.loading-spinner{border:4px solid rgba(255,69,0,.3);border-radius:50%;border-top:4px solid#FF4500;width:30px;height:30px;animation:spin 1s linear infinite;margin:0 auto 10px}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@media(max-width:768px){.main-container{flex-direction:column;align-items:center}}</style>
 </head>
@@ -43,7 +45,7 @@
       <div class="campo"><label for="manifiesto">Manifiesto</label><input type="file" id="manifiesto" name="manifiesto" accept="image/*,application/pdf" required></div>
       <div class="campo"><label for="tienda">Tienda</label><select id="tienda" name="tienda" required><option value="">Elige</option><option>Motocampo</option><option>Moto Home</option><option>Motos del mar</option></select></div>
       <div class="campo"><label for="vendedor">Vendedor</label><input type="text" id="vendedor" name="vendedor" required></div>
-      <div class="metodo-pago"><div class="metodo-pago-titulo">Pago</div><label><input type="radio" name="metodoPago" value="motocampo" checked>Directo</label><label><input type="radio" name="metodoPago" value="flixopay">Flixopay</label></div>
+      <div class="metodo-pago"><div class="metodo-pago-titulo">Pago</div><label><input type="radio" name="metodoPago" value="motocampo" checked>Directo</label> <label><input type="radio" name="metodoPago" value="flixopay">Flixopay</label></div>
       <div id="mensajeError" style="color:red;display:none;margin:10px 0;"></div>
       <div class="loading" id="loadingIndicator"><div class="loading-spinner"></div><p>Procesando...</p></div>
       <button type="submit" class="boton">Enviar</button>
@@ -52,7 +54,9 @@
   <script>
     document.addEventListener('DOMContentLoaded',()=>{
       const valorIn=document.getElementById('valorMoto'), calcBtn=document.getElementById('calcular'), costEl=document.getElementById('costoGarantia'), lock=document.getElementById('iconoCandado'), buyBtn=document.getElementById('comprarBtn'), section=document.getElementById('formularioCompra'), form=document.getElementById('uploadForm'), loader=document.getElementById('loadingIndicator'), errEl=document.getElementById('mensajeError');
-      const URL='https://script.google.com/macros/s/AKfycbzGLQbstisTxWkqaFRdv7wcNTFNEj1pe1Qqk5K94Nrn2viiMQPmxrBIEs0f-E5bX0c/exec'; let val=0,cost=0;
+      // Pega aquí tu URL de Apps Script
+      const URL='https://script.google.com/macros/s/AKfycbxTN0X3zdBk-SSuH5l-oqvnBjT34VKj8lKsDMnEJH8wSfSAUq1Xw3a5fmgoMDpA9U8/exec';
+      let val=0,cost=0;
       const fmt=v=>new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',minimumFractionDigits:0}).format(v);
       valorIn.addEventListener('input',e=>{const n=e.target.value.replace(/\D/g,'');e.target.value=n?fmt(+n):''});
       calcBtn.addEventListener('click',()=>{const n=+valorIn.value.replace(/\D/g,''); if(!n||n<1e6||n>1e8)return alert('Valor entre $1.000.000 y $99.999.999'); val=n; cost=Math.round(n*0.08); costEl.textContent=`Costo de la garantía: ${fmt(cost)}`; lock.classList.remove('visible');void lock.offsetWidth;lock.classList.add('visible');buyBtn.style.display='block'});
@@ -66,11 +70,11 @@
           const res=await fetch(URL,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
           loader.style.display='none';
           if(!res.ok){ const text=await res.text(); throw new Error(text||`HTTP ${res.status}`);}          
-          const ctype=res.headers.get('content-type')||'';
+          // Intentar parsear JSON, si falla, lanzar texto
           let json;
-          if(ctype.includes('application/json')) json=await res.json();
-          else { const txt=await res.text(); throw new Error(txt);}          
-          if(json.success){ alert('Solicitud enviada'); form.reset(); section.style.display='none'; if(payload.metodoPago==='flixopay') location.href='https://aliados.flixopay.com';}
+          try { json = await res.json(); }
+          catch(_){ const txt = await res.text(); throw new Error(txt); }
+          if(json.success){ alert('Solicitud enviada'); form.reset(); section.style.display='none'; if(payload.metodoPago==='flixopay') location.href='https://aliados.flixopay.com'; }
           else throw new Error(json.message||'Error en servidor');
         }catch(err){ console.error(err); loader.style.display='none'; errEl.textContent=err.message; errEl.style.display='block'; }
       });

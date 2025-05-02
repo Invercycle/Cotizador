@@ -308,8 +308,11 @@
         </div>
         
         <!-- Botón de compra que será visible después de calcular -->
-        <a id="botonComprar" href="https://forms.gle/4YRnXqBC658WyMi58" target="_blank" class="btn btn-success">
+        <a id="botonComprarNueva" href="https://forms.gle/4YRnXqBC658WyMi58" target="_blank" class="btn btn-success">
           <i class="fa-solid fa-cart-shopping"></i>COMPRAR GARANTÍA AHORA
+        </a>
+        <a id="botonComprarUsada" href="#" target="_blank" class="btn btn-finance" style="display: none;">
+          <i class="fa-solid fa-handshake"></i>COMPRAR GARANTÍA MOTO USADA
         </a>
         
         <p class="nota">
@@ -447,19 +450,25 @@
     }
     
     function mostrarBotonCompra(valorMoto, costoGarantia) {
-      // Actualizar el enlace del formulario para incluir parámetros predefinidos
-      const formUrl = new URL("https://forms.gle/4YRnXqBC658WyMi58");
-      
-      // Si el formulario soporta prefilled parameters, podríamos añadirlos aquí
-      // Por ejemplo: formUrl.searchParams.append("entry.123456789", valorMoto);
-      
-      botonComprar.href = formUrl.toString();
-      
-      // Mostrar el botón con animación
-      setTimeout(() => {
-        botonComprar.classList.add("visible");
-      }, 500);
-    }
+  // Actualizar el enlace del formulario para incluir parámetros predefinidos (si es necesario)
+  const formUrlNueva = new URL("https://forms.gle/4YRnXqBC658WyMi58");
+  // Si el formulario soporta prefilled parameters, podríamos añadirlos aquí
+  // Por ejemplo: formUrlNueva.searchParams.append("entry.123456789", valorMoto);
+  botonComprarNueva.href = formUrlNueva.toString();
+
+  // Mostrar el botón de compra para moto nueva con animación
+  setTimeout(() => {
+    botonComprarNueva.classList.add("visible");
+  }, 500);
+
+  // Mostrar el botón de compra para moto usada con animación y el enlace correcto
+  const botonComprarUsada = document.getElementById("botonComprarUsada");
+  botonComprarUsada.href = "https://forms.gle/mW5ypj3jtbX16Aj39"; // ¡Enlace actualizado!
+  setTimeout(() => {
+    botonComprarUsada.style.display = 'flex'; // Cambiar a flex para mantener el estilo del botón
+    botonComprarUsada.classList.add("visible");
+  }, 750); // Un pequeño retraso para que aparezca después del primer botón
+}
 
     document.getElementById("calcular").addEventListener("click", calcularGarantia);
   </script>

@@ -380,97 +380,112 @@
       </div>
     </div>
   </div>
-  
-
-  <script>
-    const inputValorMoto = document.getElementById("valorMoto");
-    const botonComprar = document.getElementById("botonComprar");
-    let valorActualMoto = 0;
-
-    function limpiarNumero(valor) {
-      return valor.replace(/\D/g, "");
-    }
-
-    function formatearMoneda(valor) {
-      return new Intl.NumberFormat("es-CO", {
-        style: "currency",
-        currency: "COP",
-        minimumFractionDigits: 0,
-      }).format(valor);
-    }
-
-    function actualizarInputFormateado(e) {
-      const valorLimpio = limpiarNumero(e.target.value);
-      if (!valorLimpio) {
-        e.target.value = "";
-        return;
-      }
-
-      const valorNumerico = parseInt(valorLimpio, 10);
-      e.target.value = formatearMoneda(valorNumerico);
-    }
-
-    function obtenerValorNumericoFormateado(cadenaFormateada) {
-      return parseInt(cadenaFormateada.replace(/\D/g, ""), 10);
-    }
-
-    inputValorMoto.addEventListener("input", actualizarInputFormateado);
-    
-    // Permitir presionar Enter para calcular
-    inputValorMoto.addEventListener("keypress", function(event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        calcularGarantia();
-      }
-    });
-
-    function calcularGarantia() {
-      const valor = obtenerValorNumericoFormateado(inputValorMoto.value);
-      const resultado = document.getElementById("costoGarantia");
-      const escudo = document.getElementById("iconoEscudo");
-
-      if (isNaN(valor) || valor < 1000000 || valor > 99999999) {
-        alert("Por favor, ingresa un valor válido entre $1,000,000 y $99,999,999.");
-        return;
-      }
-
-      // Guardar el valor de la moto para usarlo en el enlace del formulario
-      valorActualMoto = valor;
-      
-      const costoGarantia = valor * 0.08;
-      resultado.textContent = `Costo de la garantía: ${formatearMoneda(costoGarantia)}`;
-
-      // Animar el escudo
-      escudo.classList.remove("visible");
-      void escudo.offsetWidth; // Forzar reflow para reiniciar la animación
-      escudo.classList.add("visible");
-      
-      // Mostrar el botón de compra
-      mostrarBotonCompra(valor, costoGarantia);
-    }
-    
-    function mostrarBotonCompra(valorMoto, costoGarantia) {
-  // Actualizar el enlace del formulario para incluir parámetros predefinidos (si es necesario)
-  const formUrlNueva = new URL("https://forms.gle/ER1dgn4RggXqQKqG8");
-  // Si el formulario soporta prefilled parameters, podríamos añadirlos aquí
-  // Por ejemplo: formUrlNueva.searchParams.append("entry.123456789", valorMoto);
-  botonComprarNueva.href = formUrlNueva.toString();
-
-  // Mostrar el botón de compra para moto nueva con animación
-  setTimeout(() => {
-    botonComprarNueva.classList.add("visible");
-  }, 500);
-
-  // Mostrar el botón de compra para moto usada con animación y el enlace correcto
+ <script>
+const inputValorMoto = document.getElementById("valorMoto");
+  const costoGarantiaElement = document.getElementById("costoGarantia");
+  const iconoEscudo = document.getElementById("iconoEscudo");
+  const botonComprarNueva = document.getElementById("botonComprarNueva");
   const botonComprarUsada = document.getElementById("botonComprarUsada");
-  botonComprarUsada.href = "https://forms.gle/VqL5NhFWx3bhB7bP9"; // ¡Enlace actualizado!
-  setTimeout(() => {
-    botonComprarUsada.style.display = 'flex'; // Cambiar a flex para mantener el estilo del botón
+  const financiaParrafo = document.querySelector(".financia");
+  const botonFlixopay = document.querySelector(".btn-finance[href='https://aliados.flixopay.com']");
+ 
+  let valorActualMoto = 0;
+ 
+  function limpiarNumero(valor) {
+   return valor.replace(/\D/g, "");
+  }
+ 
+  function formatearMoneda(valor) {
+   return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    minimumFractionDigits: 0, // Sin decimales
+   }).format(Math.round(valor)); // Redondear al entero más cercano
+  }
+ 
+  function formatearNumero(valor) {
+   return new Intl.NumberFormat("es-CO", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+   }).format(Math.round(valor));
+  }
+ 
+  function actualizarInputFormateado(e) {
+   const valorLimpio = limpiarNumero(e.target.value);
+   if (!valorLimpio) {
+    e.target.value = "";
+    return;
+   }
+ 
+   const valorNumerico = parseInt(valorLimpio, 10);
+   e.target.value = formatearMoneda(valorNumerico);
+  }
+ 
+  function obtenerValorNumericoFormateado(cadenaFormateada) {
+   return parseInt(cadenaFormateada.replace(/\D/g, ""), 10);
+  }
+ 
+  inputValorMoto.addEventListener("input", actualizarInputFormateado);
+ 
+  // Permitir presionar Enter para calcular
+  inputValorMoto.addEventListener("keypress", function(event) {
+   if (event.key === "Enter") {
+    event.preventDefault();
+    calcularGarantia();
+   }
+  });
+ 
+  function calcularGarantia() {
+   const valorMoto = obtenerValorNumericoFormateado(inputValorMoto.value);
+ 
+   if (isNaN(valorMoto) || valorMoto < 1000000 || valorMoto > 99999999) {
+    alert("Por favor, ingresa un valor válido entre $1,000,000 y $99,999,999.");
+    return;
+   }
+ 
+   valorActualMoto = valorMoto;
+   const costoGarantia = valorMoto * 0.08;
+   costoGarantiaElement.textContent = `Costo de la garantía: ${formatearMoneda(costoGarantia)}`;
+ 
+   // Calcular la cuota aproximada con Flixopay
+   const tasaMensual = 0.02; // 2% mensual
+   const avalPorcentaje = 0.15; // 15% de aval
+   const plazoMeses = 6;
+ 
+   const valorAval = costoGarantia * avalPorcentaje;
+   const totalFinanciar = costoGarantia + valorAval;
+   const cuotaMensualSinRedondear = totalFinanciar / plazoMeses;
+   const cuotaMensualFormateada = formatearMoneda(cuotaMensualSinRedondear);
+ 
+   // Actualizar el texto de financiación
+   financiaParrafo.innerHTML = `<i class="fa-solid fa-credit-card"></i> ¿No puedes pagar de contado? ¡Financia tu garantía con <strong>Flixopay</strong> fácilmente! Cuotas aproximadas de <strong>${cuotaMensualFormateada}</strong> a 6 meses.`;
+ 
+   // Animar el escudo
+   iconoEscudo.classList.remove("visible");
+   void iconoEscudo.offsetWidth; // Forzar reflow
+   iconoEscudo.classList.add("visible");
+ 
+   mostrarBotonCompra(valorMoto, costoGarantia);
+  }
+ 
+  function mostrarBotonCompra(valorMoto, costoGarantia) {
+   // Actualizar el enlace del formulario para moto nueva
+   const formUrlNueva = new URL("https://forms.gle/ER1dgn4RggXqQKqG8");
+   botonComprarNueva.href = formUrlNueva.toString();
+ 
+   setTimeout(() => {
+    botonComprarNueva.classList.add("visible");
+   }, 500);
+ 
+   // Actualizar el enlace del formulario para moto usada
+   botonComprarUsada.href = "https://forms.gle/VqL5NhFWx3bhB7bP9";
+   setTimeout(() => {
+    botonComprarUsada.style.display = 'flex';
     botonComprarUsada.classList.add("visible");
-  }, 750); // Un pequeño retraso para que aparezca después del primer botón
-}
-
-    document.getElementById("calcular").addEventListener("click", calcularGarantia);
+   }, 750);
+  }
+ 
+  document.getElementById("calcular").addEventListener("click", calcularGarantia);
   </script>
 </body>
 </html>

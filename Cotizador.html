@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Garantía Extendida Invercycle</title>
-  <!-- Fuente moderna con más variantes de peso -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- Font Awesome para iconos profesionales -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
@@ -21,6 +19,9 @@
       --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
       --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
       --transition-speed: 0.3s;
+      --footer-bg: #f8f9fa; /* Un gris un poco más claro que antes */
+      --footer-text: #495057; 
+      --footer-link-hover: var(--primary-color);
     }
     
     * {
@@ -34,65 +35,66 @@
       background-color: #f9f9f9;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
+      display: flex; 
+      flex-direction: column; 
+      min-height: 100vh; 
       color: #444;
-      line-height: 1.5;
+      line-height: 1.6; /* Un poco más de interlineado general */
     }
 
     .main-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
-      padding: 20px;
-      max-width: 900px;
+      gap: 25px; /* Un poco más de espacio */
+      padding: 25px; /* Un poco más de espacio */
+      max-width: 950px; /* Un poco más ancho */
       width: 100%;
+      margin: 0 auto; 
+      flex: 1; 
     }
 
     .simulador-container,
     .informativo {
-      flex: 1 1 350px;
+      flex: 1 1 380px; /* Base un poco más grande */
       background: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px; /* Bordes más redondeados */
       box-shadow: var(--card-shadow);
-      padding: 20px;
+      padding: 25px; /* Mayor padding interno */
       transition: transform var(--transition-speed), box-shadow var(--transition-speed);
     }
     
     .simulador-container:hover,
     .informativo:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px); /* Efecto hover más pronunciado */
       box-shadow: var(--hover-shadow);
     }
 
     .simulador-container img {
       display: block;
-      margin: 0 auto 15px;
-      max-width: 150px;
+      margin: 0 auto 20px; /* Más margen inferior */
+      max-width: 160px; /* Logo un poco más grande */
     }
 
     .simulador h1 {
       color: var(--primary-color);
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       text-align: center;
       font-weight: 700;
-      font-size: 22px;
+      font-size: 24px; /* Título más grande */
     }
 
     .campo {
-      margin-bottom: 15px;
+      margin-bottom: 18px; /* Más espacio entre campos */
       text-align: left;
     }
 
     .campo label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
       font-weight: 600;
       color: #333;
-      font-size: 14px;
+      font-size: 15px; /* Label un poco más grande */
     }
 
     .input-wrapper {
@@ -101,46 +103,49 @@
     
     .input-wrapper i {
       position: absolute;
-      left: 10px;
+      left: 12px; /* Icono un poco más adentro */
       top: 50%;
       transform: translateY(-50%);
       color: #6c757d;
+      font-size: 14px; /* Icono un poco más pequeño */
     }
 
     .campo input {
       width: 100%;
-      padding: 8px 10px 8px 32px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 15px;
-      transition: border-color 0.3s;
+      padding: 10px 12px 10px 38px; /* Padding ajustado para el icono */
+      border: 1px solid #ced4da; /* Borde un poco más visible */
+      border-radius: 8px; /* Bordes más redondeados */
+      font-size: 16px; /* Input más grande */
+      transition: border-color 0.3s, box-shadow 0.3s; /* Añadido box-shadow a la transición */
     }
     
     .campo input:focus {
       border-color: var(--primary-color);
       outline: none;
-      box-shadow: 0 0 0 2px rgba(255, 69, 0, 0.2);
+      box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.25); /* Sombra de foco más pronunciada */
     }
 
     .btn {
       border: none;
-      padding: 10px 15px;
-      font-size: 15px;
+      padding: 12px 18px; /* Botones más grandes */
+      font-size: 16px; /* Texto de botón más grande */
       font-weight: 600;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       width: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       transition: all var(--transition-speed);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px; /* Más espacio para el icono */
       text-decoration: none;
+      text-transform: uppercase; /* Botones en mayúscula */
+      letter-spacing: 0.5px; /* Espaciado entre letras */
     }
     
     .btn i {
-      font-size: 16px;
+      font-size: 18px; /* Iconos de botón más grandes */
     }
 
     .btn-primary {
@@ -151,17 +156,19 @@
     .btn-primary:hover {
       background-color: var(--primary-hover);
       transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .btn-success {
       background-color: var(--success-color);
       color: #fff;
-      display: none; /* Oculto por defecto */
+      display: none; 
     }
 
     .btn-success:hover {
       background-color: var(--success-hover);
       transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .btn-success.visible {
@@ -182,6 +189,7 @@
     .btn-finance:hover {
       background-color: var(--finance-hover);
       transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .btn-whatsapp {
@@ -192,28 +200,29 @@
     .btn-whatsapp:hover {
       background-color: var(--whatsapp-hover);
       transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .resultado {
-      margin: 15px 0;
-      font-size: 20px;
+      margin: 20px 0;
+      font-size: 22px; /* Resultado más grande */
       color: var(--primary-color);
       font-weight: 700;
       text-align: center;
-      padding: 10px;
-      border-radius: 6px;
-      background-color: rgba(255, 69, 0, 0.05);
-      border-left: 3px solid var(--primary-color);
+      padding: 12px;
+      border-radius: 8px;
+      background-color: rgba(255, 69, 0, 0.08); /* Fondo un poco más intenso */
+      border-left: 4px solid var(--primary-color); /* Borde más grueso */
     }
 
     .shield-icon {
       text-align: center;
-      margin: 10px auto 0;
+      margin: 15px auto 0;
       opacity: 0;
       transform: scale(0.8);
       transition: all 0.5s ease-in-out;
       color: var(--primary-color);
-      font-size: 32px;
+      font-size: 36px; /* Escudo más grande */
     }
 
     .shield-icon.visible {
@@ -228,33 +237,36 @@
     }
 
     .nota, .financia {
-      font-size: 13px;
-      color: #666;
-      margin-top: 8px;
-      line-height: 1.4;
+      font-size: 13.5px; /* Un poco más grande */
+      color: #555; /* Texto un poco más oscuro */
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    .financia strong {
+        color: var(--finance-color);
     }
 
     .informativo h2 {
       color: var(--primary-color);
-      font-size: 18px;
-      margin-bottom: 15px;
+      font-size: 20px; /* Título informativo más grande */
+      margin-bottom: 18px;
       text-align: center;
       font-weight: 700;
-      padding-bottom: 8px;
-      border-bottom: 2px solid rgba(255, 69, 0, 0.2);
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(255, 69, 0, 0.25);
     }
 
     .paso {
       display: flex;
       align-items: center;
-      margin-bottom: 10px;
-      gap: 10px;
+      margin-bottom: 12px;
+      gap: 12px;
     }
 
     .paso .icon-container {
-      width: 24px;
-      height: 24px;
-      background-color: rgba(255, 69, 0, 0.1);
+      width: 28px; /* Icon container más grande */
+      height: 28px;
+      background-color: rgba(255, 69, 0, 0.12);
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -263,31 +275,164 @@
     }
 
     .paso i {
-      font-size: 12px;
+      font-size: 14px; /* Icono paso más grande */
       color: var(--primary-color);
     }
 
     .paso p {
       margin: 0;
-      font-size: 14px;
+      font-size: 15px; /* Texto paso más grande */
       color: #333;
     }
     
     .beneficios-container {
-      margin-top: 20px;
+      margin-top: 25px;
     }
+
+    /* --- ESTILOS DEL FOOTER --- */
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 30px 0; /* Más padding vertical */
+      margin-top: 40px; 
+      width: 100%;
+      font-size: 14px; /* Texto de footer un poco más grande */
+      border-top: 1px solid #dee2e6; /* Borde superior más sutil */
+    }
+
+    .footer-content {
+      max-width: 950px; /* Consistente con main-container */
+      margin: 0 auto;
+      padding: 0 25px;
+      display: flex;
+      flex-wrap: wrap; /* Permite que las columnas se envuelvan en pantallas pequeñas */
+      justify-content: space-between; /* Distribuye el espacio entre las columnas */
+      align-items: flex-start; /* Alinea los items al inicio de su contenedor flex */
+    }
+
+    .footer-column {
+      flex: 1; /* Permite que las columnas crezcan */
+      min-width: 220px; /* Ancho mínimo antes de envolver */
+      margin: 10px 15px; /* Margen para espaciado */
+    }
+    
+    .footer-column-info p {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: var(--footer-text);
+      text-decoration: none;
+      display: block; /* Links en líneas separadas */
+      margin-bottom: 8px;
+      transition: color var(--transition-speed);
+    }
+
+    .footer-links a:hover {
+      color: var(--footer-link-hover);
+      text-decoration: underline;
+    }
+
+    .footer-column-contact h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 12px;
+    }
+    .footer-column-contact p {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+    }
+    .footer-column-contact p i {
+        margin-right: 10px;
+        color: var(--primary-color);
+        font-size: 16px;
+        width: 20px; /* Para alinear el texto */
+        text-align: center;
+    }
+    .footer-column-contact a {
+      color: var(--footer-text);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+    }
+    .footer-column-contact a:hover {
+      color: var(--footer-link-hover);
+      text-decoration: underline;
+    }
+
+    .footer-column-sic {
+      text-align: right; /* Alinea el logo a la derecha dentro de su columna */
+      margin-top: 5px; /* Ajuste para alinear mejor si es necesario */
+    }
+    .footer-column-sic img {
+      height: 45px; /* Altura de la imagen SIC */
+      vertical-align: middle; 
+      transition: opacity var(--transition-speed);
+    }
+    .footer-column-sic img:hover {
+      opacity: 0.8; 
+    }
+    /* --- FIN ESTILOS DEL FOOTER --- */
     
     @media (max-width: 768px) {
       .main-container {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch; 
       }
+      .simulador-container,
+      .informativo {
+        flex-basis: auto; 
+      }
+      .footer-content {
+         flex-direction: column; /* Apila las columnas en móvil */
+         align-items: center; /* Centra las columnas apiladas */
+         text-align: center; /* Centra el texto dentro de las columnas */
+      }
+       .footer-column {
+         min-width: 100%; /* Ocupa todo el ancho */
+         margin: 15px 0; /* Espacio entre columnas apiladas */
+         text-align: center !important; /* Fuerza el centrado */
+       }
+       .footer-column-sic {
+         text-align: center; /* Centra el logo SIC en móvil */
+         margin-top: 20px;
+       }
+       .footer-column-contact p i {
+            margin-right: 5px; /* Menos margen para el icono en móvil */
+       }
+       .footer-column-contact p {
+            justify-content: center; /* Centra el contenido del párrafo de contacto */
+       }
+    }
+    @media (max-width: 480px) {
+        .btn {
+            font-size: 14px;
+            padding: 10px 15px;
+        }
+        .btn i {
+            font-size: 16px;
+        }
+        .simulador h1 {
+            font-size: 20px;
+        }
+        .informativo h2 {
+            font-size: 18px;
+        }
+         .paso p, .campo label {
+            font-size: 14px;
+        }
+        .campo input {
+            font-size: 15px;
+        }
+         .resultado {
+            font-size: 18px;
+        }
     }
   </style>
 </head>
 <body>
   <div class="main-container">
-    <!-- Simulador -->
     <div class="simulador-container">
       <img src="https://panamericana.vtexassets.com/arquivos/ids/487369/garantia-extendida-1-ano-460049.jpg?v=638139110632170000" alt="Logo Invercycle" />
       <div class="simulador">
@@ -307,16 +452,15 @@
           <i class="fa-solid fa-shield-halved"></i>
         </div>
         
-        <!-- Botón de compra que será visible después de calcular -->
         <a id="botonComprarNueva" href="https://forms.gle/4YRnXqBC658WyMi58" target="_blank" class="btn btn-success">
-          <i class="fa-solid fa-cart-shopping"></i>COMPRAR GARANTÍA AHORA
+          <i class="fa-solid fa-cart-shopping"></i>Comprar Nueva
         </a>
         <a id="botonComprarUsada" href="#" target="_blank" class="btn btn-finance" style="display: none;">
-          <i class="fa-solid fa-handshake"></i>COMPRAR GARANTÍA MOTO USADA
+          <i class="fa-solid fa-handshake"></i>Comprar Usada
         </a>
         
         <p class="nota">
-          <i class="fa-solid fa-info-circle"></i> Este valor es una estimación del costo de la garantía extendida de Invercycle (8% sobre el valor de la moto sin documentos).
+          <i class="fa-solid fa-info-circle"></i> Este valor es una estimación del costo de la garantía extendida Invercycle (8% sobre el valor de la moto sin documentos).
         </p>
         <p class="financia">
           <i class="fa-solid fa-credit-card"></i> ¿No puedes pagar de contado? ¡Financia tu garantía con <strong>Flixopay</strong> fácilmente!
@@ -330,7 +474,6 @@
       </div>
     </div>
 
-    <!-- Informativo -->
     <div class="informativo">
       <h2>¿Cómo comprar una garantía?</h2>
 
@@ -379,15 +522,36 @@
         </div>
       </div>
     </div>
-  </div>
- <script>
+  </div> <footer>
+    <div class="footer-content">
+      <div class="footer-column footer-column-info">
+        <p>&copy; 2025 INVERCYCLE S.A.S.<br>Todos los derechos reservados.</p>
+        <div class="footer-links">
+          <a href="https://drive.google.com/file/d/1dFnR5kpyHbBVV1i15HSqq3jBB8WzXxEW/view?usp=sharing" target="_blank" rel="noopener noreferrer">Términos y Condiciones</a>
+          <a href="https://drive.google.com/file/d/1v7fk975dKCklpG_7EnWipMT3VWDs7QzX/view?usp=sharing" target="_blank" rel="noopener noreferrer">Garantía Suplementaria</a>
+          <a href="https://drive.google.com/file/d/1tvVug8tzazYYViF2PDVjRgkm3oU9Udu3/view?usp=sharing" target="_blank" rel="noopener noreferrer">Política de Tratamiento de Datos</a>
+        </div>
+      </div>
+      <div class="footer-column footer-column-contact">
+        <h4>Contáctanos</h4>
+        <p><i class="fa-solid fa-envelope"></i> <a href="mailto:informacion@invercycle.com">informacion@invercycle.com</a></p>
+        <p><i class="fa-brands fa-whatsapp"></i> <a href="https://api.whatsapp.com/send/?phone=573045889263&text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Invercycle" target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp</a></p>
+      </div>
+      <div class="footer-column footer-column-sic">
+        <a href="https://sedeelectronica.sic.gov.co/" target="_blank" rel="noopener noreferrer" title="Vigilado por la Superintendencia de Industria y Comercio">
+          <img src="https://flixopay.com/images/industria.png" alt="Vigilado por la Superintendencia de Industria y Comercio" />
+        </a>
+      </div>
+    </div>
+  </footer>
+  <script>
 const inputValorMoto = document.getElementById("valorMoto");
   const costoGarantiaElement = document.getElementById("costoGarantia");
   const iconoEscudo = document.getElementById("iconoEscudo");
   const botonComprarNueva = document.getElementById("botonComprarNueva");
   const botonComprarUsada = document.getElementById("botonComprarUsada");
   const financiaParrafo = document.querySelector(".financia");
-  const botonFlixopay = document.querySelector(".btn-finance[href='https://aliados.flixopay.com']");
+  // const botonFlixopay = document.querySelector(".btn-finance[href='https://aliados.flixopay.com']"); // No se usa actualmente
  
   let valorActualMoto = 0;
  
@@ -399,16 +563,16 @@ const inputValorMoto = document.getElementById("valorMoto");
    return new Intl.NumberFormat("es-CO", {
     style: "currency",
     currency: "COP",
-    minimumFractionDigits: 0, // Sin decimales
-   }).format(Math.round(valor)); // Redondear al entero más cercano
+    minimumFractionDigits: 0, 
+   }).format(Math.round(valor)); 
   }
  
-  function formatearNumero(valor) {
-   return new Intl.NumberFormat("es-CO", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-   }).format(Math.round(valor));
-  }
+  // function formatearNumero(valor) { // No se usa actualmente
+  //  return new Intl.NumberFormat("es-CO", {
+  //   minimumFractionDigits: 0,
+  //   maximumFractionDigits: 0,
+  //  }).format(Math.round(valor));
+  // }
  
   function actualizarInputFormateado(e) {
    const valorLimpio = limpiarNumero(e.target.value);
@@ -427,7 +591,6 @@ const inputValorMoto = document.getElementById("valorMoto");
  
   inputValorMoto.addEventListener("input", actualizarInputFormateado);
  
-  // Permitir presionar Enter para calcular
   inputValorMoto.addEventListener("keypress", function(event) {
    if (event.key === "Enter") {
     event.preventDefault();
@@ -439,7 +602,7 @@ const inputValorMoto = document.getElementById("valorMoto");
    const valorMoto = obtenerValorNumericoFormateado(inputValorMoto.value);
  
    if (isNaN(valorMoto) || valorMoto < 1000000 || valorMoto > 99999999) {
-    alert("Por favor, ingresa un valor válido entre $1,000,000 y $99,999,999.");
+    alert("Por favor, ingresa un valor válido para la moto entre $1,000,000 y $99,999,999.");
     return;
    }
  
@@ -447,9 +610,8 @@ const inputValorMoto = document.getElementById("valorMoto");
    const costoGarantia = valorMoto * 0.08;
    costoGarantiaElement.textContent = `Costo de la garantía: ${formatearMoneda(costoGarantia)}`;
  
-   // Calcular la cuota aproximada con Flixopay
-   const tasaMensual = 0.02; // 2% mensual
-   const avalPorcentaje = 0.15; // 15% de aval
+   const tasaMensual = 0.02; 
+   const avalPorcentaje = 0.15; 
    const plazoMeses = 6;
  
    const valorAval = costoGarantia * avalPorcentaje;
@@ -457,32 +619,35 @@ const inputValorMoto = document.getElementById("valorMoto");
    const cuotaMensualSinRedondear = totalFinanciar / plazoMeses;
    const cuotaMensualFormateada = formatearMoneda(cuotaMensualSinRedondear);
  
-   // Actualizar el texto de financiación
-   financiaParrafo.innerHTML = `<i class="fa-solid fa-credit-card"></i> ¿No puedes pagar de contado? ¡Financia tu garantía con <strong>Flixopay</strong> fácilmente! Cuotas aproximadas de <strong>${cuotaMensualFormateada}</strong> a 6 meses.`;
+   financiaParrafo.innerHTML = `<i class="fa-solid fa-credit-card"></i> ¿No puedes pagar de contado? ¡Financia tu garantía con <strong>Flixopay</strong> fácilmente! Cuotas aproximadas de <strong>${cuotaMensualFormateada}</strong> a ${plazoMeses} meses.`;
  
-   // Animar el escudo
    iconoEscudo.classList.remove("visible");
-   void iconoEscudo.offsetWidth; // Forzar reflow
+   void iconoEscudo.offsetWidth; 
    iconoEscudo.classList.add("visible");
  
-   mostrarBotonCompra(valorMoto, costoGarantia);
+   mostrarBotonesCompra(valorMoto, costoGarantia);
   }
  
-  function mostrarBotonCompra(valorMoto, costoGarantia) {
-   // Actualizar el enlace del formulario para moto nueva
-   const formUrlNueva = new URL("https://forms.gle/ER1dgn4RggXqQKqG8");
-   botonComprarNueva.href = formUrlNueva.toString();
+  function mostrarBotonesCompra(valorMoto, costoGarantia) { //Cambiado nombre de función
+   // Enlace actualizado para moto nueva, incluyendo valores prellenados si el formulario lo permite
+   // Ejemplo de prellenado (ajustar según los nombres de los campos de tu Google Form):
+   // const formUrlNueva = new URL("https://docs.google.com/forms/d/e/ID_DEL_FORMULARIO_NUEVA/viewform");
+   // formUrlNueva.searchParams.append("entry.ID_CAMPO_VALOR_MOTO", valorMoto);
+   // formUrlNueva.searchParams.append("entry.ID_CAMPO_COSTO_GARANTIA", Math.round(costoGarantia));
+   const formUrlNueva = "https://forms.gle/ER1dgn4RggXqQKqG8"; // Mantén el enlace directo si no prellenas
+   botonComprarNueva.href = formUrlNueva;
  
    setTimeout(() => {
     botonComprarNueva.classList.add("visible");
-   }, 500);
+   }, 300); // Un poco más rápido
  
-   // Actualizar el enlace del formulario para moto usada
-   botonComprarUsada.href = "https://forms.gle/VqL5NhFWx3bhB7bP9";
+   // Enlace para moto usada
+   const formUrlUsada = "https://forms.gle/VqL5NhFWx3bhB7bP9";
+   botonComprarUsada.href = formUrlUsada;
    setTimeout(() => {
     botonComprarUsada.style.display = 'flex';
     botonComprarUsada.classList.add("visible");
-   }, 750);
+   }, 500); // Un poco más rápido
   }
  
   document.getElementById("calcular").addEventListener("click", calcularGarantia);
